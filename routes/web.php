@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\CarController;
+use App\Http\Controllers\BrandController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +20,15 @@ use App\Http\Controllers\AuthController;
 */
 
 Route::get('/', [AuthController::class, 'indexUser'])->name('index');
-Route::get('/auth/login', [AuthController::class, 'indexLogin'])->name('login');
-Route::get('/auth/regis', [AuthController::class, 'indexRegis'])->name('register');
-Route::post('/auth/regis', [AuthController::class, 'regisUser']);
+Route::get('/auth/login', [AuthController::class, 'indexUserLogin'])->name('login');
+Route::get('/auth/regis', [AuthController::class, 'indexUserRegis'])->name('register');
+Route::post('/auth/regis', [AuthController::class, 'regisUser'])->middleware('guest');
+Route::get('/auth/services', [AuthController::class, 'indexAdminLogin'])->middleware('guest');
+Route::post('/auth/services', [AuthController::class, 'loginAdmin'])->middleware('guest');
+Route::get('/logoutAdmin', [AuthController::class, 'logoutAdmin'])->name('admin.logout');
+
+Route::resource('manage/admin', AdminController::class)->middleware('auth:admin');
+Route::resource('manage/user', UserController::class)->middleware('auth:admin');
+Route::resource('manage/car', CarController::class)->middleware('auth:admin');
+Route::resource('manage/brand', BrandController::class)->middleware('auth:admin');
+Route::resource('book', BookController::class);

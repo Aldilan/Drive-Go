@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
-
-class UserController extends Controller
+class BookController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,7 +28,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
@@ -36,7 +35,14 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        Transaction::create([
+            "car_id" => $id,
+            "user_id" => '039840392840239',
+            "pickup_date" => '2023-07-05',
+            "return_date" => '2023-07-20',
+            "total" => '2600000'
+        ]);
+        return redirect()->route('index')->with('success', 'Success!');
     }
 
     /**

@@ -3,16 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\Brand;
+use App\Models\Car;
 
-
-class UserController extends Controller
+class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        if (Auth::guard('admin')->check()) {
+            $title = 'ADMIN';
+            $countUser = User::all()->count();
+            $countCar = Car::all()->count();
+            $countBrand = Brand::all()->count();
+            return view('modules.admin.index', ['title' => $title, 'countUser' => $countUser, 'countBrand' => $countBrand, 'countCar' => $countCar]);
+        }
     }
 
     /**

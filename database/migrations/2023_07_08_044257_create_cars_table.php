@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::create('cars', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('brand');
+            $table->string('brand_id');
             $table->string('model');
             $table->string('license_number')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('rate');
             $table->string('stock');
             $table->rememberToken();

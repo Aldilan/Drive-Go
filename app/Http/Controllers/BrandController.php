@@ -2,17 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 
-
-class UserController extends Controller
+class BrandController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        if (Auth::guard('admin')->check()) {
+            $i = 0;
+            $datas = Brand::all();
+            $createUrl = '/manage/brand/create';
+            $title = 'BRAND';
+            $countData = Brand::all()->count();
+            return view('modules.admin.brand', ['countData' => $countData, 'title' => $title, 'createUrl' => $createUrl, 'datas' => $datas, 'i' => $i]);
+        }
     }
 
     /**
@@ -20,7 +28,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('modules.admin.create.brandCreate');
     }
 
     /**
@@ -28,7 +36,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'brand' => 'required',
+        ]);
+        Brand::create([
+            "brand" => $request->brand,
+        ]);
+        return redirect()->route('brand.index')->with('success', 'Success!');
     }
 
     /**

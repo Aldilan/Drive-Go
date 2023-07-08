@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+use App\Models\Car;
 use Illuminate\Http\Request;
 
-
-class UserController extends Controller
+class CarController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        if (Auth::guard('admin')->check()) {
+            $title = 'CAR';
+            $countData = Car::all()->count();
+            return view('modules.admin.car', ['countData' => $countData, 'title' => $title]);
+        }
     }
 
     /**
@@ -20,7 +25,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('modules.admin.create.carCreate');
     }
 
     /**
