@@ -15,3 +15,5 @@ use App\Http\Controllers\AuthController;
 */
 
 Route::get('/', [AuthController::class, 'indexUser'])->name('index');
+Route::get('/auth/login', [AuthController::class, 'indexLogin']);
+Route::get('/auth/regis', [AuthController::class, 'indexRegis']);

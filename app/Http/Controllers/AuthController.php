@@ -14,4 +14,12 @@ class AuthController extends Controller
     {
         return view('modules.user.index');
     }
+    public function indexLogin()
+    {
+        return view('modules.auth.login.index');
+    }
+    public function indexRegis()
+    {
+        return view('modules.auth.regis.index');
+    }
 }
